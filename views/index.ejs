@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Goals</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>My Goals</h1>
+    <div id="flash-message" class="flash hidden"></div>
+
+    <div class="lists">
+      <% ['today', 'weekly', 'monthly'].forEach(function(key) { %>
+        <% const list = config[key]; const items = lists[key]; %>
+        <section class="list-column" data-list="<%= key %>" style="--accent: <%= list.color %>">
+          <h2>
+            <%= list.label %>
+            <span class="cap-badge"><%= items.length %>/<%= list.limit %></span>
+          </h2>
+
+          <ul class="goal-list" id="<%= key %>-list">
+            <% items.forEach(function(item) { %>
+              <li class="goal-item" data-id="<%= item.id %>">
+                <span class="goal-title"><%= item.title %></span>
+                <div class="goal-actions">
+                  <button class="complete-btn" title="Mark complete">✓</button>
+                  <button class="delete-btn" title="Delete">✕</button>
+                </div>
+              </li>
+            <% }); %>
+          </ul>
+
+          <form class="add-form" data-list="<%= key %>">
+            <input
+              type="text"
+              class="goal-input"
+              placeholder="Add a goal..."
+              maxlength="100"
+              required
+            />
+            <button type="submit">+</button>
+          </form>
+        </section>
+      <% }); %>
+    </div>
+
+    <section class="history-section">
+      <h2>History</h2>
+      <ul id="history-list" class="history-list">
+        <% history.forEach(function(h) { %>
+          <li class="history-item history-<%= h.action %>">
+            <span class="history-type"><%= h.list_type %></span>
+            <span class="history-title"><%= h.title %></span>
+            <span class="history-action"><%= h.action %></span>
+            <span class="history-date"><%= new Date(h.archived_at).toLocaleDateString() %></span>
+          </li>
+        <% }); %>
+        <% if (history.length === 0) { %>
+          <li class="history-empty">No history yet.</li>
+        <% } %>
+      </ul>
+    </section>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>
