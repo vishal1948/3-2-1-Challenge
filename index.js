@@ -1,10 +1,21 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import pg from "pg";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-const db = new pg.Client({
+// Uses a hosted DATABASE_URL (e.g. from Neon/Render) when set,
+// otherwise falls back to local Postgres for development.
+const db = process.env.DATABASE_URL
+  ? new pg.Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+    })
+
+: new pg.Pool({
   user: "postgres",
   host: "localhost",
   database: "permalist",
@@ -18,9 +29,9 @@ db.connect()
 
 // Config for the three goal lists: table name, active-item cap, display color, label
 const LIST_CONFIG = {
-  today: { table: "today_goals", limit: 3, color: "#4A90D9", label: "Today" },
-  weekly: { table: "weekly_goals", limit: 2, color: "#50C878", label: "This Week" },
-  monthly: { table: "monthly_goals", limit: 1, color: "#9B59B6", label: "This Month" },
+  today: { table: "today_goals", limit: 3, color: "#f80707", label: "Today" },
+  weekly: { table: "weekly_goals", limit: 2, color: "#f7f306", label: "This Week" },
+  monthly: { table: "monthly_goals", limit: 1, color: "#1cdb15", label: "This Month" },
 };
 
 app.use(express.json());
