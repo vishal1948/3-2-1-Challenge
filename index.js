@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 // Uses a hosted DATABASE_URL (e.g. from Neon/Render) when set,
 // otherwise falls back to local Postgres for development.
 const db = process.env.DATABASE_URL
-  ? new pg.Client({
+  ? new pg.Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
     })
