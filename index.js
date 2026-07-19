@@ -30,8 +30,8 @@ db.connect()
 // Config for the three goal lists: table name, active-item cap, display color, label
 const LIST_CONFIG = {
   today: { table: "today_goals", limit: 3, color: "#f80707", label: "Today" },
-  weekly: { table: "weekly_goals", limit: 2, color: "#f7f306", label: "This Week" },
-  monthly: { table: "monthly_goals", limit: 1, color: "#1cdb15", label: "This Month" },
+  weekly: { table: "weekly_goals", limit: 2, color: "#068bf7", label: "This Week" },
+  monthly: { table: "monthly_goals", limit: 1, color: "#0a9105", label: "This Month" },
 };
 
 app.use(express.json());
