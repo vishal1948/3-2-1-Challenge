@@ -8,7 +8,15 @@
 </head>
 <body>
   <div class="container">
-    <h1>My Goals</h1>
+    <div class="topbar">
+      <h1>My Goals</h1>
+      <div class="user-bar">
+        <span class="user-email"><%= user.email %></span>
+        <form method="POST" action="/logout" class="logout-form">
+          <button type="submit" class="logout-btn">Log Out</button>
+        </form>
+      </div>
+    </div>
     <div id="flash-message" class="flash hidden"></div>
 
     <div class="lists">
@@ -50,11 +58,12 @@
       <h2>History</h2>
       <ul id="history-list" class="history-list">
         <% history.forEach(function(h) { %>
-          <li class="history-item history-<%= h.action %>">
+          <li class="history-item history-<%= h.action %>" data-id="<%= h.id %>">
             <span class="history-type"><%= h.list_type %></span>
             <span class="history-title"><%= h.title %></span>
             <span class="history-action"><%= h.action %></span>
             <span class="history-date"><%= new Date(h.archived_at).toLocaleDateString() %></span>
+            <button class="history-delete-btn" title="Remove from history">✕</button>
           </li>
         <% }); %>
         <% if (history.length === 0) { %>

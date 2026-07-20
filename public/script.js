@@ -34,17 +34,18 @@ $(function () {
     `).find(".goal-title").text(item.title).end();
   }
 
-  function prependHistory(listType, title, action) {
+  function prependHistory(listType, title, action, historyId) {
     const $empty = $(".history-empty");
     if ($empty.length) $empty.remove();
 
     const dateStr = new Date().toLocaleDateString();
     const $item = $(`
-      <li class="history-item history-${action}">
+      <li class="history-item history-${action}" data-id="${historyId}">
         <span class="history-type">${listType}</span>
         <span class="history-title"></span>
         <span class="history-action">${action}</span>
         <span class="history-date">${dateStr}</span>
+        <button class="history-delete-btn" title="Remove from history">✕</button>
       </li>
     `);
     $item.find(".history-title").text(title);
@@ -101,12 +102,38 @@ $(function () {
         if (res.success) {
           $item.remove();
           updateBadge(listType);
-          prependHistory(listType, title, action);
+          prependHistory(listType, title, action, res.historyId);
           showFlash(isComplete ? "Goal completed" : "Goal deleted", "success");
         }
       },
       error: function (xhr) {
         const msg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "Something went wrong";
+        showFlash(msg, "error");
+      },
+    });
+  });
+
+  // Delete a history entry (event delegation for dynamically added items)
+  $("#history-list").on("click", ".history-delete-btn", function () {
+    const $item = $(this).closest(".history-item");
+    const id = $item.data("id");
+
+    $.ajax({
+      url: "/api/history/delete",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ id }),
+      success: function (res) {
+        if (res.success) {
+          $item.remove();
+          if ($("#history-list .history-item").length === 0) {
+            $("#history-list").append('<li class="history-empty">No history yet.</li>');
+          }
+          showFlash("History entry removed", "success");
+        }
+      },
+      error: function (xhr) {
+        const msg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "Failed to remove entry";
         showFlash(msg, "error");
       },
     });

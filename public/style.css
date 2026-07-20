@@ -223,6 +223,24 @@ h1 {
   font-size: 0.75rem;
 }
 
+.history-delete-btn {
+  border: none;
+  background: #f4f4f4;
+  color: #999;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.history-delete-btn:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
 .history-empty {
   color: #888;
   font-size: 0.9rem;
@@ -239,4 +257,114 @@ h1 {
   .list-column {
     max-width: 100%;
   }
+}
+
+/* Top bar with user email + logout */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.topbar h1 {
+  margin: 0;
+  text-align: left;
+}
+
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.logout-form {
+  margin: 0;
+}
+
+.logout-btn {
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #e2e2e2;
+}
+
+/* Auth pages (login/signup) */
+.auth-container {
+  max-width: 380px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.auth-container h1 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auth-form input {
+  padding: 9px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.auth-hint {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.auth-form button {
+  margin-top: 16px;
+  background: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background: #3f7fc0;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0;
+}
+
+.auth-switch a {
+  color: #4a90d9;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
 }
