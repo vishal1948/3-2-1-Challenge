@@ -41,6 +41,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
+// Render (and most hosts) terminate HTTPS at a proxy and forward plain HTTP
+// to the app. Without this, Express thinks every request is insecure, so a
+// secure:true session cookie below never gets set -- logins would silently
+// fail to persist. This tells Express to trust the proxy's X-Forwarded-Proto
+// header instead.
+app.set("trust proxy", 1);
+
 // ---- Session setup ----
 // Sessions are stored in Postgres (via connect-pg-simple), not in memory.
 // This matters because Render's free tier restarts the process on cold
